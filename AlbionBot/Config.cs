@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace AlbionBot
 {
-    class Program
+    class Config
     {
-        static void Main(string[] args)
+        static Config()
         {
-            Console.WriteLine(Utilities.GetAlert("TEST"));
+
         }
+    }
+
+    public struct BotConfig
+    {
+        public string token;
+        public string cmdPrefix;
     }
 }
