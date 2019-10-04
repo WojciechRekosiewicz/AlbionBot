@@ -10,7 +10,8 @@ namespace AlbionBot
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Test " +  Config.bot.token);
+            Console.WriteLine("Test: " + Config.bot.token);
+            Console.ReadLine();
 
 
         }

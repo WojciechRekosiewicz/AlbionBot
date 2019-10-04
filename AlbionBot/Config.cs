@@ -17,9 +17,10 @@ namespace AlbionBot
 
         static Config()
         {
-            if (!Directory.Exists(configFolder)) Directory.CreateDirectory(configFolder);
+            if (!Directory.Exists(configFolder))
+                Directory.CreateDirectory(configFolder);
 
-            if(!File.Exists(configFolder + "/" + configFile))
+            if (!File.Exists(configFolder + "/" + configFile))
             {
                 bot = new BotConfig();
                 string json = JsonConvert.SerializeObject(bot, Formatting.Indented);
@@ -28,10 +29,8 @@ namespace AlbionBot
             else
             {
                 string json = File.ReadAllText(configFolder + "/" + configFile);
-                var data = JsonConvert.DeserializeObject<BotConfig>(json);
-        
+                bot = JsonConvert.DeserializeObject<BotConfig>(json);
             }
-
         }
     }
 
@@ -41,3 +40,5 @@ namespace AlbionBot
         public string cmdPrefix;
     }
 }
+
+
