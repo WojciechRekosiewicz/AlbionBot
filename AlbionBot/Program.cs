@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Discord.WebSocket;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,15 @@ namespace AlbionBot
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Test: " + Config.bot.token);
-            Console.ReadLine();
+        DiscordSocketClient _client;
+        CommandHandler _handler;
 
+
+        static void Main(string[] args)
+        => new Program().StartAsync().GetAwaiter().GetResult();
+
+        public async Task StartAsync()
+        {
 
         }
     }
