@@ -13,7 +13,12 @@ namespace AlbionBot.Modules
         [Command("Echo")]
         public async Task Echo([Remainder]string message)
         {
-            await Context.Channel.SendMessageAsync($"Not you are {message}");  
+            var embed = new EmbedBuilder();
+            embed.WithTitle("Echoed message");
+            embed.WithDescription(message);
+            embed.WithColor(new Color(0, 255, 0));
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());  
         }
     }
 }
