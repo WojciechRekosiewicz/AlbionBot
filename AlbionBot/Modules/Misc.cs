@@ -11,9 +11,9 @@ namespace AlbionBot.Modules
     public class Misc : ModuleBase<SocketCommandContext>
     {
         [Command("Echo")]
-        public async Task Echo()
+        public async Task Echo([Remainder]string message)
         {
-            await Context.Channel.SendMessageAsync("Hello MF");  
+            await Context.Channel.SendMessageAsync($"Not you are {message}");  
         }
     }
 }
