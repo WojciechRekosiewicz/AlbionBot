@@ -21,6 +21,25 @@ namespace AlbionBot.Modules
             await Context.Channel.SendMessageAsync("", false, embed.Build());  
         }
 
+        [Command("pick")]
+        public async Task PickOne([Remainder]string message)
+        {
+            string[] options = message.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+            Random ran = new Random();
+            string selection = options[ran.Next(0, options.Length)];
+
+
+
+            var embed = new EmbedBuilder();
+            embed.WithTitle("Choice for " + Context.User.Username);
+            embed.WithDescription(selection);
+            embed.WithColor(new Color(255, 255, 0));
+            embed.WithThumbnailUrl("https://timesofindia.indiatimes.com/thumb/msid-67586673,width-800,height-600,resizemode-4/67586673.jpg");
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
+        }
+
         [Command("Rules")]
         public async Task Rules ()
         {
@@ -28,6 +47,8 @@ namespace AlbionBot.Modules
             embed.WithTitle("Rules");
             embed.WithDescription(Utilities.GetAlert("TEST"));
             embed.WithColor(new Color(0, 255, 0));
+            embed.WithThumbnailUrl("https://media.istockphoto.com/vectors/crown-flat-design-fantasy-icon-vector-id965301668?k=6&m=965301668&s=612x612&w=0&h=WQW6DRiWp8d-8jm7yosonQbctnWMwb0Bb_1fFriIuOs=");
+
 
             await Context.Channel.SendMessageAsync("", false, embed.Build());
         }
