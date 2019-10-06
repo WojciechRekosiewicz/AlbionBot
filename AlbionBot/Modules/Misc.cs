@@ -20,5 +20,27 @@ namespace AlbionBot.Modules
 
             await Context.Channel.SendMessageAsync("", false, embed.Build());  
         }
+
+        [Command("Rules")]
+        public async Task Rules ()
+        {
+            var embed = new EmbedBuilder();
+            embed.WithTitle("Rules");
+            embed.WithDescription(Utilities.GetAlert("TEST"));
+            embed.WithColor(new Color(0, 255, 0));
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
+        }
+
+        [Command("Rekrutacja")]
+        public async Task Recrutment()
+        {
+            var embed = new EmbedBuilder();
+            embed.WithTitle("Rules");
+            embed.WithDescription(Utilities.GetAlert("Rules"));
+            embed.WithColor(new Color(0, 255, 0));
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
+        }
     }
 }
