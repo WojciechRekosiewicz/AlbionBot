@@ -21,6 +21,18 @@ namespace AlbionBot.Modules
             await Context.Channel.SendMessageAsync("", false, embed.Build());  
         }
 
+        [Command("Blame")]
+        public async Task Blame([Remainder]string message)
+        {
+            var embed = new EmbedBuilder();
+            embed.WithTitle("Shame!!");
+            embed.WithDescription(Utilities.GetFormattedAlert("BLAME", message));
+            embed.WithColor(255, 0, 0);
+            embed.WithThumbnailUrl("https://www.caycon.com/wp-content/uploads/2014/11/Dont-Start-a-Business-if-You-Have-a-Victim-Mentality.jpg");
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
+        }
+
         [Command("pick")]
         public async Task PickOne([Remainder]string message)
         {
