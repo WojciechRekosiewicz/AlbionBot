@@ -10,7 +10,18 @@ namespace AlbionBot
 {
     class DataStorage
     {
-        public static Dictionary<string, string> pairs = new Dictionary<string, string>();
+        private static Dictionary<string, string> pairs = new Dictionary<string, string>();
+
+        public static void AddPairToStorage(string key, string value)
+        {
+            pairs.Add(key, value);
+            SaveData();
+        }
+
+        public static int GetPairsCount()
+        {
+            return pairs.Count();
+        }
 
         static DataStorage()
         {

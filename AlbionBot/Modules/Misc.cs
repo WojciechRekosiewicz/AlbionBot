@@ -102,5 +102,12 @@ namespace AlbionBot.Modules
 
             await Context.Channel.SendMessageAsync("", false, embed.Build());
         }
+
+        [Command("Data")]
+        public async Task GetData()
+        {
+            await Context.Channel.SendMessageAsync($"Data has {DataStorage.GetPairsCount()} elements.");
+            DataStorage.AddPairToStorage("Nickname", "LeeGe");
+        }
     }
 }
