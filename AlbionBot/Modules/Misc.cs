@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 
 namespace AlbionBot.Modules
 {
@@ -21,12 +22,30 @@ namespace AlbionBot.Modules
             await Context.Channel.SendMessageAsync("", false, embed.Build());  
         }
 
-        [Command("secret")]
-        public async Task Secret()
+        [Command("Secret")]
+        public async Task Secret([Remainder]string arg = "")
         {
+            if (!UserIsNagelfar((SocketGuildUser)Context.User))
+            {
+                await Context.Channel.SendMessageAsync($"{Context.User.Mention} You don't have required role to do that");
+                return;
+            }
             var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
             await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET"));
-            //await Context.Channel.SendMessageAsync(Utilities.GetAlert("SECRET"));
+        }
+
+        private bool UserIsNagelfar(SocketGuildUser user)
+        {
+            //user.Guild.Roles 
+            string targetRoleName = "Nagelfar";
+            var result = from r in user.Guild.Roles
+                         where r.Name == targetRoleName
+                         select r.Id;
+
+            ulong roleID = result.FirstOrDefault();
+            if (roleID == 0) return false;
+            var targetRole = user.Guild.GetRole(roleID);
+            return user.Roles.Contains(targetRole);
         }
 
         [Command("Blame")]
