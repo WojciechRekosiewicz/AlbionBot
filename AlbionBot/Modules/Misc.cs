@@ -21,6 +21,14 @@ namespace AlbionBot.Modules
             await Context.Channel.SendMessageAsync("", false, embed.Build());  
         }
 
+        [Command("secret")]
+        public async Task Secret()
+        {
+            var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
+            await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET"));
+            //await Context.Channel.SendMessageAsync(Utilities.GetAlert("SECRET"));
+        }
+
         [Command("Blame")]
         public async Task Blame([Remainder]string message)
         {
