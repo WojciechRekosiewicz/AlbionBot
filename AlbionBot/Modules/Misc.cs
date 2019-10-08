@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,11 +8,28 @@ using AlbionBot.Core.UserAccounts;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using NReco.ImageGenerator;
 
 namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+
+        [Command("Greeting")]
+        public async Task Test()
+        {
+            string css = "<style>\n h1{\n color: red;\n }\n</style> \n ";
+            string html = String.Format("<h1> Hi {0}</h1>", Context.User.Username);
+            var converter = new HtmlToImageConverter
+            {
+                Width = 250,
+                Height = 70
+            };
+            var jpgBytes = converter.GenerateImage(css + html, NReco.ImageGenerator.ImageFormat.Jpeg);
+            await Context.Channel.SendFileAsync(new MemoryStream(jpgBytes), "User.jpg");
+
+        }
+
         [Command("stats")]
         public async Task MyXP()
         {
