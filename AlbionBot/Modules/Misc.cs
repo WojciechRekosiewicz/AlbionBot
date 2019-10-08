@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AlbionBot.Core.UserAccounts;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -11,6 +12,14 @@ namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("stats")]
+        public async Task MyXP()
+        {
+            UserAccount account = UserAccounts.GetAccount(Context.User);
+            await Context.Channel.SendMessageAsync($" EX : {account.XP} and Points : {account.Points}");
+        }
+
+
         [Command("Echo")]
         public async Task Echo([Remainder]string message)
         {           
