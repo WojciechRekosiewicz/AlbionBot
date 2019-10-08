@@ -19,7 +19,8 @@ namespace AlbionBot.Modules
             embed.WithDescription(message);
             embed.WithColor(new Color(0, 255, 0));
 
-            await Context.Channel.SendMessageAsync("", false, embed.Build());  
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
+            
         }
 
         [Command("Secret")]
