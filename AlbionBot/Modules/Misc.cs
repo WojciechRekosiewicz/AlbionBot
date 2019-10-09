@@ -9,11 +9,56 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using NReco.ImageGenerator;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+
+        [Command("Person")]
+        public async Task GetPerson()
+        {
+            string json = "";
+            using (WebClient client = new WebClient())
+            {
+                json = client.DownloadString("https://gameinfo.albiononline.com/api/gameinfo/players/gV5ro9GCTq-mF-yr-WierA");
+            }
+
+            var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
+
+            //var name = dataObject.results[3].AverageItemPower.ToString();
+            var name = dataObject.Name.ToString();
+            await Context.Channel.SendMessageAsync($"Nick : {name}");
+
+        }
+
+
+        [Command("Register")]
+        public async Task Register([Remainder]string nickname)
+        {
+            string json = "";
+            using (WebClient client = new WebClient())
+            {
+                json = client.DownloadString($"https://gameinfo.albiononline.com/api/gameinfo/search?q={nickname}");
+            }
+
+            var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
+
+            var name = dataObject.players[0].Name.ToString();
+            var guild = dataObject.players[0].GuildName.ToString();
+            //  await Context.Channel.SendMessageAsync($"Nick : {name} guild : {guild}");
+            if (name == nickname && guild == "Nagelfar")
+            {
+                await Context.Channel.SendMessageAsync($"{name} you are member of Nagelfar. I will now register you.");
+            }
+            else
+            {
+                await Context.Channel.SendMessageAsync($"{name} you are not member of Nagelfar!");
+            }
+
+        }
 
         [Command("Greeting")]
         public async Task Test()
