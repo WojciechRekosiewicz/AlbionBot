@@ -17,6 +17,7 @@ namespace AlbionBot.Core
 
         internal static Task StartTimer()
         {
+            // gets server id and channel id
             channel = Global.Client.GetGuild(621807985349361695).GetTextChannel(621807985349361697);
 
             loopingTimer = new Timer()

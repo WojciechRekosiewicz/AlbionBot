@@ -49,13 +49,41 @@ namespace AlbionBot.Modules
             var name = dataObject.players[0].Name.ToString();
             var guild = dataObject.players[0].GuildName.ToString();
             //  await Context.Channel.SendMessageAsync($"Nick : {name} guild : {guild}");
+
+            
+            var user = Context.User;
+            
+            var getId = Context.User.Username;
+            //var use = guild.GetUser(getId);
+
+            //var s = Context.UserGuild.Name;
+
+            var asd = Context.User;
+            Console.WriteLine(asd);
+            Console.WriteLine(getId);
+
+
+           
+
+            
+
+            var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+            
+
             if (name == nickname && guild == "Nagelfar")
+                //if (name == nickname && guild == "Nagelfar" && user.ToString() == nickname)
             {
+                await (user as IGuildUser).AddRoleAsync(role);
                 await Context.Channel.SendMessageAsync($"{name} you are member of Nagelfar. I will now register you.");
             }
+            //else if("sad" != nickname)
+            //{
+            //    await Context.Channel.SendMessageAsync($"{name} name you enter {y}is not you name on discord! Plz set your name on discord to the same as your name in game!");
+            //}
             else
             {
-                await Context.Channel.SendMessageAsync($"{name} you are not member of Nagelfar!");
+                await Context.Channel.SendMessageAsync($"test");
+                // await Context.Channel.SendMessageAsync($"{name} you are not member of Nagelfar!");
             }
 
         }
