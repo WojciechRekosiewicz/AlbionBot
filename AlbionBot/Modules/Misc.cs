@@ -17,6 +17,8 @@ namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        internal string[] DiscordMembers;
+        internal string[] nagelfarMembers;
 
         [Command("members")]
         public async Task Members()
@@ -51,41 +53,127 @@ namespace AlbionBot.Modules
             }
         }
 
-        [Command("Dmembers")]
-        public async Task Traitement()
+        [Command("getRank")]
+        public async Task GetRank()
         {
 
 
-            var users = Context.Guild.Users;
-            var kap = Context.Guild.GetUser(174845094376112129).Nickname;
-            //   var xsad = Context.Guild.Ge
-            LinkedList<string> discordMembers = new LinkedList<string>();
-            var userArray = users.ToArray();
+            //foreach (string n in GetDiscordMembers())
+            //{
+            //    await Context.Channel.SendMessageAsync($"{n}");
+            //}
 
-            var xs  = Context.Guild.GetUser(Context.User.Id).Nickname;
-      
-
-           // await Context.Channel.SendMessageAsync(kap);
-            for (int index = 0; index < users.Count; index++)
+            for(int i = 0; i < GetDiscordMembers().Length; i++)
             {
-                
-                var sda = (IGuildUser)userArray[index];
-                var d = userArray[index].Nickname;
-
-                if(d == null)
+                for(int j = 0; j < GetNagelfarMembers().Length; j++)
                 {
-                    await Context.Channel.SendMessageAsync(sda.Username);
+                    if(GetDiscordMembers()[i] == GetNagelfarMembers()[j])
+                    {
+                        await Context.Channel.SendMessageAsync($" {GetDiscordMembers()[i]} the same {GetNagelfarMembers()[j]}");
+                        break;
+                    }
+                    else
+                    {
+                        await Context.Channel.SendMessageAsync($" {GetDiscordMembers()[i]} NOT the same {GetNagelfarMembers()[j]}");
+                    }
+                }
+            }
+        }
+
+        private void UserIsNagelfar()
+        {
+            
+        }
+
+
+        private string[] GetNagelfarMembers()
+        {
+            string json = "";
+            using (WebClient client = new WebClient())
+            {
+                json = client.DownloadString($"https://gameinfo.albiononline.com/api/gameinfo/guilds/4BK_Vdp2R_ydqiy07asImg/members");
+            }
+
+            var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
+
+            int memCount = dataObject.Count;
+
+            nagelfarMembers = new string[memCount];
+
+            for (int i = 0; i < memCount; i++)
+            {
+                var name = dataObject[i].Name.ToString();            
+                nagelfarMembers[i] = name;
+            }
+
+            return nagelfarMembers;
+        }
+
+        private string[] GetDiscordMembers()
+        {
+            var users = Context.Guild.Users.ToArray();
+
+
+            DiscordMembers = new string[users.Length];
+
+
+            for (int index = 0; index < users.Length; index++)
+            {
+
+                var user = (IGuildUser)users[index];
+                var getNickName = users[index].Nickname;
+
+                if (getNickName == null)
+                {
+                    DiscordMembers[index] = user.Username;
                 }
                 else
                 {
-                    await Context.Channel.SendMessageAsync(d);
+                    DiscordMembers[index] = getNickName;                   
                 }
+            }
 
-                discordMembers.AddLast("");
+            return DiscordMembers;
+            //for (int index = 0; index < users.Count; index++)
+            //{
+
+            //    var user = (IGuildUser)userArray[index];
+            //    var getNickName = userArray[index].Nickname;
+
+            //    if (getNickName == null)
+            //    {
+            //        await Context.Channel.SendMessageAsync(user.Username);
+            //    }
+            //    else
+            //    {
+            //        await Context.Channel.SendMessageAsync(getNickName);
+            //    }
+            //}          
+        }
+
+        [Command("Dmembers")]
+        public async Task Traitement()
+        {
+            var users = Context.Guild.Users;
+            var userArray = users.ToArray();                      
+
+            for (int index = 0; index < users.Count; index++)
+            {
+                
+                var user = (IGuildUser)userArray[index];
+                var getNickName = userArray[index].Nickname;
+
+                if(getNickName == null)
+                {
+                    await Context.Channel.SendMessageAsync(user.Username);
+                }
+                else
+                {
+                    await Context.Channel.SendMessageAsync(getNickName);
+                }
             }
             await Context.Channel.SendMessageAsync($"{ users.Count}");
-
-            //you can loop here on users and do the traitement
+       
         }
 
 
@@ -110,6 +198,7 @@ namespace AlbionBot.Modules
         [Command("Register")]
         public async Task Register([Remainder]string nickname)
         {
+            // var xs  = Context.Guild.GetUser(Context.User.Id).Nickname;   
             string json = "";
             using (WebClient client = new WebClient())
             {
@@ -191,7 +280,7 @@ namespace AlbionBot.Modules
         [Command("Secret")]
         public async Task Secret([Remainder]string arg = "")
         {
-            if (!UserIsNagelfar((SocketGuildUser)Context.User))
+            if (!UserIsNagelf((SocketGuildUser)Context.User))
             {
                 await Context.Channel.SendMessageAsync($"{Context.User.Mention} You don't have required role to do that");
                 return;
@@ -200,7 +289,7 @@ namespace AlbionBot.Modules
             await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET"));
         }
 
-        private bool UserIsNagelfar(SocketGuildUser user)
+        private bool UserIsNagelf(SocketGuildUser user)
         {
             //user.Guild.Roles 
             string targetRoleName = "Nagelfar";
