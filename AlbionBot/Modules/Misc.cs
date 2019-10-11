@@ -16,6 +16,33 @@ namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("x")]
+        public async Task Traitement()
+        {
+
+
+            var users = Context.Guild.Users;
+            
+            LinkedList<string> discordMembers = new LinkedList<string>();
+            var userArray = users.ToArray();
+
+            var xs  = Context.Guild.GetUser(Context.User.Id).Nickname;
+            await Context.Channel.SendMessageAsync(xs);
+
+            for (int index = 0; index < users.Count; index++)
+            {
+                
+                var sda = (userArray[index] as IGuildUser).Nickname;
+                //await Context.Channel.SendMessageAsync(sda);
+                //await Context.Channel.SendMessageAsync($"{userArray[index].ToString()}");
+
+                discordMembers.AddLast("");
+            }
+            await Context.Channel.SendMessageAsync($"{ users.Count}");
+
+            //you can loop here on users and do the traitement
+        }
+
 
         [Command("Person")]
         public async Task GetPerson()
@@ -60,11 +87,6 @@ namespace AlbionBot.Modules
 
             var asd = Context.User;        
             Console.WriteLine(serverNickname);
-
-
-           
-
-            
 
             var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
             
