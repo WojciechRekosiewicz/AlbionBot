@@ -51,25 +51,35 @@ namespace AlbionBot.Modules
             }
         }
 
-        [Command("x")]
+        [Command("Dmembers")]
         public async Task Traitement()
         {
 
 
             var users = Context.Guild.Users;
-            
+            var kap = Context.Guild.GetUser(174845094376112129).Nickname;
+            //   var xsad = Context.Guild.Ge
             LinkedList<string> discordMembers = new LinkedList<string>();
             var userArray = users.ToArray();
 
             var xs  = Context.Guild.GetUser(Context.User.Id).Nickname;
-            //await Context.Channel.SendMessageAsync(xs);
+      
 
+           // await Context.Channel.SendMessageAsync(kap);
             for (int index = 0; index < users.Count; index++)
             {
                 
-                var sda = (userArray[index] as IGuildUser).Nickname;
-                //await Context.Channel.SendMessageAsync(sda);
-                await Context.Channel.SendMessageAsync($"{userArray[index].ToString()}");
+                var sda = (IGuildUser)userArray[index];
+                var d = userArray[index].Nickname;
+
+                if(d == null)
+                {
+                    await Context.Channel.SendMessageAsync(sda.Username);
+                }
+                else
+                {
+                    await Context.Channel.SendMessageAsync(d);
+                }
 
                 discordMembers.AddLast("");
             }
@@ -127,7 +137,6 @@ namespace AlbionBot.Modules
             
 
             if (name == nickname && guild == "Nagelfar" && serverNickname == nickname)
-                //if (name == nickname && guild == "Nagelfar" && user.ToString() == nickname)
             {
                 await (user as IGuildUser).AddRoleAsync(role);
                 await Context.Channel.SendMessageAsync($"{name} you are member of Nagelfar. I will now register you.");
