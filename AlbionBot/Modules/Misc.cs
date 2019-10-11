@@ -17,8 +17,7 @@ namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
-        internal string[] DiscordMembers;
-        internal string[] nagelfarMembers;
+     
 
         [Command("members")]
         public async Task Members()
@@ -56,37 +55,24 @@ namespace AlbionBot.Modules
         [Command("getRank")]
         public async Task GetRank()
         {
+            List<string> nagelfarMembers = GetNagelfarMembers();
+            List<string> discordMembers = GetDiscordMembers();
 
+            var CommonList = nagelfarMembers.Intersect(discordMembers);
 
-            //foreach (string n in GetDiscordMembers())
-            //{
-            //    await Context.Channel.SendMessageAsync($"{n}");
-            //}
-
-            for(int i = 0; i < GetDiscordMembers().Length; i++)
-            {
-                for(int j = 0; j < GetNagelfarMembers().Length; j++)
+            for (int i = 0; i < CommonList.Count(); i++)
                 {
-                    if(GetDiscordMembers()[i] == GetNagelfarMembers()[j])
-                    {
-                        await Context.Channel.SendMessageAsync($" {GetDiscordMembers()[i]} the same {GetNagelfarMembers()[j]}");
-                        break;
-                    }
-                    else
-                    {
-                        await Context.Channel.SendMessageAsync($" {GetDiscordMembers()[i]} NOT the same {GetNagelfarMembers()[j]}");
-                    }
-                }
+                await Context.Channel.SendMessageAsync($"{CommonList.ElementAt(i)}");
             }
         }
 
         private void UserIsNagelfar()
         {
-            
+            List<string> TestList2 = new List<string>();
         }
 
 
-        private string[] GetNagelfarMembers()
+        private List<string> GetNagelfarMembers()
         {
             string json = "";
             using (WebClient client = new WebClient())
@@ -98,24 +84,22 @@ namespace AlbionBot.Modules
 
             int memCount = dataObject.Count;
 
-            nagelfarMembers = new string[memCount];
+            List<string> nagelfarMembers = new List<string>();
 
             for (int i = 0; i < memCount; i++)
             {
-                var name = dataObject[i].Name.ToString();            
-                nagelfarMembers[i] = name;
+                var name = dataObject[i].Name.ToString();
+                nagelfarMembers.Add(name);
             }
 
             return nagelfarMembers;
         }
 
-        private string[] GetDiscordMembers()
+        private List<string> GetDiscordMembers()
         {
             var users = Context.Guild.Users.ToArray();
 
-
-            DiscordMembers = new string[users.Length];
-
+            List<string> DiscordMembers = new List<string>();
 
             for (int index = 0; index < users.Length; index++)
             {
@@ -125,30 +109,16 @@ namespace AlbionBot.Modules
 
                 if (getNickName == null)
                 {
-                    DiscordMembers[index] = user.Username;
+                    DiscordMembers.Insert(index, user.Username);
                 }
                 else
                 {
-                    DiscordMembers[index] = getNickName;                   
+                    DiscordMembers.Insert(index, getNickName);
                 }
             }
 
             return DiscordMembers;
-            //for (int index = 0; index < users.Count; index++)
-            //{
-
-            //    var user = (IGuildUser)userArray[index];
-            //    var getNickName = userArray[index].Nickname;
-
-            //    if (getNickName == null)
-            //    {
-            //        await Context.Channel.SendMessageAsync(user.Username);
-            //    }
-            //    else
-            //    {
-            //        await Context.Channel.SendMessageAsync(getNickName);
-            //    }
-            //}          
+          
         }
 
         [Command("Dmembers")]
