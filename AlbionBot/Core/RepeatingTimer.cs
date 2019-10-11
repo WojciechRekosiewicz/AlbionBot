@@ -31,7 +31,7 @@ namespace AlbionBot.Core
 
             loopingTimer = new Timer()
             {
-                Interval = 5000,
+                Interval = 20000,
                 AutoReset = true,
                 Enabled = true
             };
@@ -86,7 +86,7 @@ namespace AlbionBot.Core
 
          
 
-            await channel.SendMessageAsync("$Register LeeGe");
+            await channel.SendMessageAsync("$x");
 
             //  await Context.Channel.SendMessageAsync($"Nick : {name} guild : {guild}");
 

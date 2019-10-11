@@ -27,14 +27,14 @@ namespace AlbionBot.Modules
             var userArray = users.ToArray();
 
             var xs  = Context.Guild.GetUser(Context.User.Id).Nickname;
-            await Context.Channel.SendMessageAsync(xs);
+            //await Context.Channel.SendMessageAsync(xs);
 
             for (int index = 0; index < users.Count; index++)
             {
                 
                 var sda = (userArray[index] as IGuildUser).Nickname;
                 //await Context.Channel.SendMessageAsync(sda);
-                //await Context.Channel.SendMessageAsync($"{userArray[index].ToString()}");
+                await Context.Channel.SendMessageAsync($"{userArray[index].ToString()}");
 
                 discordMembers.AddLast("");
             }
