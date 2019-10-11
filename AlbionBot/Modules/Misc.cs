@@ -11,11 +11,46 @@ using Discord.WebSocket;
 using NReco.ImageGenerator;
 using System.Net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AlbionBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+
+        [Command("members")]
+        public async Task Members()
+        {
+            
+
+            string json = "";
+            using (WebClient client = new WebClient())
+            {
+                json = client.DownloadString($"https://gameinfo.albiononline.com/api/gameinfo/guilds/4BK_Vdp2R_ydqiy07asImg/members");
+            }
+
+            var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
+
+            int memCount = dataObject.Count;
+
+            string[] nageMembers = new string[memCount];
+
+            await Context.Channel.SendMessageAsync($"{memCount}");
+          
+
+            for(int i = 0; i < memCount; i++)
+            {
+                var name = dataObject[i].Name.ToString();
+
+                nageMembers[i] = name;
+            }
+
+            foreach (string n in nageMembers)
+            {
+                await Context.Channel.SendMessageAsync($"{n}");              
+            }
+        }
+
         [Command("x")]
         public async Task Traitement()
         {

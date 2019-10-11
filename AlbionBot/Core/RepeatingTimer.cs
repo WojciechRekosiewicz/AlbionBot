@@ -26,16 +26,14 @@ namespace AlbionBot.Core
         internal static Task StartTimer()
         {
             // gets server id and channel id
-            //channel = Global.Client.GetGuild(621807985349361695).GetTextChannel(621807985349361697);
             channel = Global.Client.GetGuild(541341695074107392).GetTextChannel(631871642917928971);
 
             loopingTimer = new Timer()
             {
-                Interval = 20000,
+                Interval = 30000000,
                 AutoReset = true,
                 Enabled = true
             };
-            //loopingTimer.Elapsed += OnTimerTicked;
             loopingTimer.Elapsed += CheckGuild;
 
             return Task.CompletedTask;
@@ -61,10 +59,38 @@ namespace AlbionBot.Core
             {
                 Console.WriteLine("tick before client rdy");       
             }
+            await channel.SendMessageAsync("$x");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //for (int index = 0; index < discordMembers.Count(); index++)
             //{
-               
+
             //}
 
             //string nickname = "";
@@ -79,42 +105,6 @@ namespace AlbionBot.Core
             //var name = dataObject.players[0].Name.ToString();
             //var guild = dataObject.players[0].GuildName.ToString();
 
-            
-
-  
-
-
-         
-
-            await channel.SendMessageAsync("$x");
-
-            //  await Context.Channel.SendMessageAsync($"Nick : {name} guild : {guild}");
-
-
-
-            //var serverNickname = (user as IGuildUser).Nickname;
-
-            //var asd = Context.User;
-            //Console.WriteLine(serverNickname);
-
-            //var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
-
-
-            //if (name == nickname && guild == "Nagelfar" && serverNickname == nickname)
-
-            //{
-            //    await (user as IGuildUser).AddRoleAsync(role);
-            //    await Context.Channel.SendMessageAsync($"{name} you are member of Nagelfar. I will now register you.");
-            //}
-            //else if (serverNickname != nickname)
-            //{
-            //    await Context.Channel.SendMessageAsync($"{serverNickname} name you enter ({name}) is not you name on discord! Plz set your name on discord to the same as your name in game!");
-            //}
-            //else
-            //{
-
-            //    await Context.Channel.SendMessageAsync($"{name} you are not member of Nagelfar!");
-            //}
 
         }
 
