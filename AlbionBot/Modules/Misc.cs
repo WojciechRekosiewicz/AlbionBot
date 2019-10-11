@@ -21,9 +21,7 @@ namespace AlbionBot.Modules
 
         [Command("members")]
         public async Task Members()
-        {
-            
-
+        {           
             string json = "";
             using (WebClient client = new WebClient())
             {
@@ -52,23 +50,87 @@ namespace AlbionBot.Modules
             }
         }
 
-        [Command("getRank")]
-        public async Task GetRank()
+        [Command("check")]
+        public async Task CheckRank()
         {
             List<string> nagelfarMembers = GetNagelfarMembers();
             List<string> discordMembers = GetDiscordMembers();
 
-            var CommonList = nagelfarMembers.Intersect(discordMembers);
+            var commonList = nagelfarMembers.Intersect(discordMembers);
+            var differences = discordMembers.Except(nagelfarMembers);
 
-            for (int i = 0; i < CommonList.Count(); i++)
+            var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+
+
+
+            var users = Context.Guild.Users;
+            var userArray = users.ToArray();
+
+
+            //for (int i = 0; i < commonList.Count(); i++)
+            //{
+            //    await Context.Channel.SendMessageAsync($"{commonList.ElementAt(i)}");
+            //}
+
+            for (int index = 0; index < users.Count; index++)
+            {
+
+                var user = (IGuildUser)userArray[index];
+                var getNickName = userArray[index].Nickname;
+
+                
+                if (getNickName == null)
                 {
-                await Context.Channel.SendMessageAsync($"{CommonList.ElementAt(i)}");
+                   // await Context.Channel.SendMessageAsync(user.Username);
+                    try
+                    {
+                        if (commonList.ElementAt(index) == userArray[index].Username)
+                        {
+                            await Context.Channel.SendMessageAsync($"{userArray[index].Username}");
+                            await userArray[index].AddRoleAsync(role);
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                   // await Context.Channel.SendMessageAsync(getNickName);
+                    try
+                    {
+                        if (commonList.ElementAt(index) == userArray[index].Nickname)
+                        {
+                            await Context.Channel.SendMessageAsync($"{userArray[index].Nickname}");
+                            await userArray[index].AddRoleAsync(role);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        continue;
+                    }
+                }
             }
+ 
+            
+
+           
+
+            //for (int i = 0; i < differences.Count(); i++)
+            //{
+            //    await Context.Channel.SendMessageAsync($"{differences.ElementAt(i)}");
+            //}
         }
 
-        private void UserIsNagelfar()
+        private void RankGiverTaker()
         {
-            List<string> TestList2 = new List<string>();
+            List<string> nagelfarMembers = GetNagelfarMembers();
+            List<string> discordMembers = GetDiscordMembers();
+
+            var commonList = nagelfarMembers.Intersect(discordMembers);
+            var differences = discordMembers.Except(nagelfarMembers);
+
         }
 
 
