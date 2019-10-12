@@ -63,11 +63,23 @@ namespace AlbionBot.Modules
             }
         }
 
-       
+        private async Task ResetRanks()
+        {
+            var users = Context.Guild.Users;
+            var userArray = users.ToArray();
+            var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                await userArray[i].RemoveRoleAsync(role);
+            }
+        }
+
+
 
         [Command("check")]
         public async Task CheckRank()
-        {
+        {            
             List<string> nagelfarMembers = GetNagelfarMembers();
             List<string> discordMembers = GetDiscordMembers();
 
@@ -79,18 +91,19 @@ namespace AlbionBot.Modules
             var users = Context.Guild.Users;
             var userArray = users.ToArray();
 
+            await ResetRanks();
+
             for (int i = 0; i < users.Count; i++)
-                for(int j = 0; j < discordMembers.Count(); j++)
+                for(int j = 0; j < commonList.Count(); j++)
             {
 
-                var user = (IGuildUser)userArray[i];
                 var getNickName = userArray[i].Nickname;
            
                 if (getNickName == null)
                 {
                         if (commonList.ElementAt(j) == userArray[i].Username)
-                        { 
-                            await userArray[i].AddRoleAsync(role);                           
+                        {
+                            await userArray[i].AddRoleAsync(role);
                         }
                 }
                 else
@@ -100,7 +113,7 @@ namespace AlbionBot.Modules
 
                             await userArray[i].AddRoleAsync(role);
                         }
-                }
+                    }
             }
 
              await Context.Channel.SendMessageAsync($"Done");
