@@ -50,6 +50,21 @@ namespace AlbionBot.Modules
             }
         }
 
+        [Command("ClearRoles")]
+        public async Task ClearRoles()
+        {
+            var users = Context.Guild.Users;
+            var userArray = users.ToArray();
+            var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                await userArray[i].RemoveRoleAsync(role);
+            }
+        }
+
+       
+
         [Command("check")]
         public async Task CheckRank()
         {
@@ -72,23 +87,33 @@ namespace AlbionBot.Modules
             //    await Context.Channel.SendMessageAsync($"{commonList.ElementAt(i)}");
             //}
 
-            for (int index = 0; index < users.Count; index++)
+            
+
+           // var duplicates = pi.Where(p => picArray.Contains(p.filePath);
+           
+
+
+            for (int i = 0; i < users.Count; i++)
+                for(int j = 0; j < discordMembers.Count(); j++)
             {
 
-                var user = (IGuildUser)userArray[index];
-                var getNickName = userArray[index].Nickname;
-
-                
+                var user = (IGuildUser)userArray[i];
+                var getNickName = userArray[i].Nickname;
+           
                 if (getNickName == null)
                 {
                    // await Context.Channel.SendMessageAsync(user.Username);
                     try
                     {
-                        if (commonList.ElementAt(index) == userArray[index].Username)
+
+
+                        if (commonList.ElementAt(j) == userArray[i].Username)
                         {
-                            await Context.Channel.SendMessageAsync($"{userArray[index].Username}");
-                            await userArray[index].AddRoleAsync(role);
-                        }
+
+
+                           // await Context.Channel.SendMessageAsync($"{userArray[i].Username}");
+                            await userArray[i].AddRoleAsync(role);                           
+                            }
                     }
                     catch(Exception e)
                     {
@@ -100,10 +125,10 @@ namespace AlbionBot.Modules
                    // await Context.Channel.SendMessageAsync(getNickName);
                     try
                     {
-                        if (commonList.ElementAt(index) == userArray[index].Nickname)
+                        if (commonList.ElementAt(j) == userArray[i].Nickname)
                         {
-                            await Context.Channel.SendMessageAsync($"{userArray[index].Nickname}");
-                            await userArray[index].AddRoleAsync(role);
+                            //await Context.Channel.SendMessageAsync($"{userArray[i].Nickname}");
+                            await userArray[i].AddRoleAsync(role);
                         }
                     }
                     catch (Exception e)
