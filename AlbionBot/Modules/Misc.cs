@@ -76,22 +76,8 @@ namespace AlbionBot.Modules
 
             var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
 
-
-
             var users = Context.Guild.Users;
             var userArray = users.ToArray();
-
-
-            //for (int i = 0; i < commonList.Count(); i++)
-            //{
-            //    await Context.Channel.SendMessageAsync($"{commonList.ElementAt(i)}");
-            //}
-
-            
-
-           // var duplicates = pi.Where(p => picArray.Contains(p.filePath);
-           
-
 
             for (int i = 0; i < users.Count; i++)
                 for(int j = 0; j < discordMembers.Count(); j++)
@@ -102,50 +88,22 @@ namespace AlbionBot.Modules
            
                 if (getNickName == null)
                 {
-                   // await Context.Channel.SendMessageAsync(user.Username);
-                    try
-                    {
-
-
                         if (commonList.ElementAt(j) == userArray[i].Username)
-                        {
-
-
-                           // await Context.Channel.SendMessageAsync($"{userArray[i].Username}");
+                        { 
                             await userArray[i].AddRoleAsync(role);                           
-                            }
-                    }
-                    catch(Exception e)
-                    {
-                        continue;
-                    }
+                        }
                 }
                 else
                 {
-                   // await Context.Channel.SendMessageAsync(getNickName);
-                    try
-                    {
                         if (commonList.ElementAt(j) == userArray[i].Nickname)
                         {
-                            //await Context.Channel.SendMessageAsync($"{userArray[i].Nickname}");
+
                             await userArray[i].AddRoleAsync(role);
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        continue;
-                    }
                 }
             }
- 
-            
 
-           
-
-            //for (int i = 0; i < differences.Count(); i++)
-            //{
-            //    await Context.Channel.SendMessageAsync($"{differences.ElementAt(i)}");
-            //}
+             await Context.Channel.SendMessageAsync($"Done");
         }
 
         private void RankGiverTaker()
