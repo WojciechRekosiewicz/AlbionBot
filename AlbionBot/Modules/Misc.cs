@@ -237,18 +237,10 @@ namespace AlbionBot.Modules
 
             var name = dataObject.players[0].Name.ToString();
             var guild = dataObject.players[0].GuildName.ToString();
-            //  await Context.Channel.SendMessageAsync($"Nick : {name} guild : {guild}");
-
             
-            var user = Context.User;
-            
-            var getId = Context.User.Username;
-            //var use = guild.GetUser(getId);
+            var user = Context.User;          
 
             var serverNickname = (user as IGuildUser).Nickname;
-
-            var asd = Context.User;        
-            Console.WriteLine(serverNickname);
 
             var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
             
@@ -264,7 +256,6 @@ namespace AlbionBot.Modules
             }
             else
             {
-                //  await Context.Channel.SendMessageAsync($"test");
                 await Context.Channel.SendMessageAsync($"{name} you are not member of Nagelfar!");
             }
 
