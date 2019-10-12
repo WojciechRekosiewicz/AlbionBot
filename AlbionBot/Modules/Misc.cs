@@ -20,6 +20,8 @@ namespace AlbionBot.Modules
      
 
         [Command("Members")]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task Members()
         {           
             string json = "";
@@ -51,6 +53,8 @@ namespace AlbionBot.Modules
         }
 
         [Command("ClearRoles")]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task ClearRoles()
         {
             var users = Context.Guild.Users;
@@ -100,12 +104,12 @@ namespace AlbionBot.Modules
                     if (getNickName == null)
 
                     {
-                        await Context.Channel.SendMessageAsync($"not nick {userArray[i].Username}");
+                       // await Context.Channel.SendMessageAsync($"not nick {userArray[i].Username}");
                         await userArray[i].RemoveRoleAsync(role);
                     }
                     else
                     {
-                        await Context.Channel.SendMessageAsync($"not user {userArray[i].Nickname}");
+                      //  await Context.Channel.SendMessageAsync($"not user {userArray[i].Nickname}");
                         await userArray[i].RemoveRoleAsync(role);
                     }
                 }
@@ -117,59 +121,6 @@ namespace AlbionBot.Modules
 
             await Context.Channel.SendMessageAsync($"Done");
         }
-
-        //[Command("Check")]
-        //public async Task CheckRank()
-        //{            
-        //    List<string> nagelfarMembers = GetNagelfarMembers();
-        //    List<string> discordMembers = GetDiscordMembers();
-
-        //    var commonList = nagelfarMembers.Intersect(discordMembers);
-        //    var differences = discordMembers.Except(nagelfarMembers);
-
-        //    var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
-
-        //    var users = Context.Guild.Users;
-        //    var userArray = users.ToArray();
-
-        //    await ResetRanks();
-
-        //    for (int i = 0; i < users.Count; i++)
-        //        for(int j = 0; j < commonList.Count(); j++)
-        //    {
-
-        //        var getNickName = userArray[i].Nickname;
-           
-        //        if (getNickName == null)
-        //        {
-        //                if (commonList.ElementAt(j) == userArray[i].Username)
-        //                {
-        //                    await userArray[i].AddRoleAsync(role);
-        //                }
-        //        }
-        //        else
-        //        {
-        //                if (commonList.ElementAt(j) == userArray[i].Nickname)
-        //                {
-
-        //                    await userArray[i].AddRoleAsync(role);
-        //                }
-        //            }
-        //    }
-
-        //     await Context.Channel.SendMessageAsync($"Done");
-        //}
-
-        private void RankGiverTaker()
-        {
-            List<string> nagelfarMembers = GetNagelfarMembers();
-            List<string> discordMembers = GetDiscordMembers();
-
-            var commonList = nagelfarMembers.Intersect(discordMembers);
-            var differences = discordMembers.Except(nagelfarMembers);
-
-        }
-
 
         private List<string> GetNageDiscordMembers()
         {
@@ -254,6 +205,8 @@ namespace AlbionBot.Modules
         }
 
         [Command("Dmembers")]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task Traitement()
         {
             var users = Context.Guild.Users;
@@ -280,6 +233,8 @@ namespace AlbionBot.Modules
 
 
         [Command("Person")]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task GetPerson()
         {
             string json = "";
@@ -459,3 +414,46 @@ namespace AlbionBot.Modules
         }
     }
 }
+
+
+//[Command("Check")]
+//public async Task CheckRank()
+//{            
+//    List<string> nagelfarMembers = GetNagelfarMembers();
+//    List<string> discordMembers = GetDiscordMembers();
+
+//    var commonList = nagelfarMembers.Intersect(discordMembers);
+//    var differences = discordMembers.Except(nagelfarMembers);
+
+//    var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+
+//    var users = Context.Guild.Users;
+//    var userArray = users.ToArray();
+
+//    await ResetRanks();
+
+//    for (int i = 0; i < users.Count; i++)
+//        for(int j = 0; j < commonList.Count(); j++)
+//    {
+
+//        var getNickName = userArray[i].Nickname;
+
+//        if (getNickName == null)
+//        {
+//                if (commonList.ElementAt(j) == userArray[i].Username)
+//                {
+//                    await userArray[i].AddRoleAsync(role);
+//                }
+//        }
+//        else
+//        {
+//                if (commonList.ElementAt(j) == userArray[i].Nickname)
+//                {
+
+//                    await userArray[i].AddRoleAsync(role);
+//                }
+//            }
+//    }
+
+//     await Context.Channel.SendMessageAsync($"Done");
+//}
