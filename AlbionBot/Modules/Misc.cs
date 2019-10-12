@@ -75,23 +75,21 @@ namespace AlbionBot.Modules
             }
         }
 
-
-
         [Command("Check")]
         public async Task CheckRank()
         {            
             List<string> nagelfarMembers = GetNagelfarMembers();
-            List<string> discordMembers = GetDiscordMembers();
+            List<string> getNageDiscordMembers = GetNageDiscordMembers();
 
-            var commonList = nagelfarMembers.Intersect(discordMembers);
-            var differences = discordMembers.Except(nagelfarMembers);
+            var commonList = nagelfarMembers.Intersect(getNageDiscordMembers);
+            var differences = getNageDiscordMembers.Except(nagelfarMembers);
 
             var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
 
             var users = Context.Guild.Users;
             var userArray = users.ToArray();
 
-            await ResetRanks();
+            //await ResetRanks();
 
             for (int i = 0; i < users.Count; i++)
                 for(int j = 0; j < commonList.Count(); j++)
@@ -101,23 +99,65 @@ namespace AlbionBot.Modules
            
                 if (getNickName == null)
                 {
-                        if (commonList.ElementAt(j) == userArray[i].Username)
+                        if (commonList.ElementAt(j) != userArray[i].Username)
                         {
-                            await userArray[i].AddRoleAsync(role);
+                            await userArray[i].RemoveRoleAsync(role);
                         }
                 }
                 else
                 {
-                        if (commonList.ElementAt(j) == userArray[i].Nickname)
+                        if (commonList.ElementAt(j) != userArray[i].Nickname)
                         {
 
-                            await userArray[i].AddRoleAsync(role);
+                            await userArray[i].RemoveRoleAsync(role);
                         }
                     }
             }
 
              await Context.Channel.SendMessageAsync($"Done");
         }
+
+        //[Command("Check")]
+        //public async Task CheckRank()
+        //{            
+        //    List<string> nagelfarMembers = GetNagelfarMembers();
+        //    List<string> discordMembers = GetDiscordMembers();
+
+        //    var commonList = nagelfarMembers.Intersect(discordMembers);
+        //    var differences = discordMembers.Except(nagelfarMembers);
+
+        //    var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+
+        //    var users = Context.Guild.Users;
+        //    var userArray = users.ToArray();
+
+        //    await ResetRanks();
+
+        //    for (int i = 0; i < users.Count; i++)
+        //        for(int j = 0; j < commonList.Count(); j++)
+        //    {
+
+        //        var getNickName = userArray[i].Nickname;
+           
+        //        if (getNickName == null)
+        //        {
+        //                if (commonList.ElementAt(j) == userArray[i].Username)
+        //                {
+        //                    await userArray[i].AddRoleAsync(role);
+        //                }
+        //        }
+        //        else
+        //        {
+        //                if (commonList.ElementAt(j) == userArray[i].Nickname)
+        //                {
+
+        //                    await userArray[i].AddRoleAsync(role);
+        //                }
+        //            }
+        //    }
+
+        //     await Context.Channel.SendMessageAsync($"Done");
+        //}
 
         private void RankGiverTaker()
         {
@@ -126,6 +166,39 @@ namespace AlbionBot.Modules
 
             var commonList = nagelfarMembers.Intersect(discordMembers);
             var differences = discordMembers.Except(nagelfarMembers);
+
+        }
+
+
+        private List<string> GetNageDiscordMembers()
+        {
+            var users = Context.Guild.Users.ToArray();
+
+            List<string> DiscordNageMembers = new List<string>();
+            var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+       //     SocketRole checkRole = Context.Guild.Roles.FirstOrDefault(x => x.Name == "Nagetest");
+
+            for (int index = 0; index < users.Length; index++)
+            {
+
+                var user = (IGuildUser)users[index];
+                var getNickName = users[index].Nickname;
+
+                if (users[index].Guild.Roles.FirstOrDefault(y => y.Name == "Nagetest") != null)
+                {
+
+                    if (getNickName == null)
+                    {
+                        DiscordNageMembers.Insert(index, user.Username);
+                    }
+                    else
+                    {
+                        DiscordNageMembers.Insert(index, getNickName);
+                    }
+                }
+            }
+
+            return DiscordNageMembers;
 
         }
 
