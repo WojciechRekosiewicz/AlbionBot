@@ -25,7 +25,7 @@ namespace AlbionBot
             {
                 LogLevel = LogSeverity.Verbose                            
             });
-            _client.Log += Log;
+           // _client.Log += Log;
             _client.Ready += RepeatingTimer.StartTimer;
             await _client.LoginAsync(TokenType.Bot, Config.bot.token);
             await _client.StartAsync();
@@ -37,9 +37,9 @@ namespace AlbionBot
 
 
 
-        private async Task Log(LogMessage msg)
-        {
-            Console.WriteLine(msg.Message);            
-         }
+        //private async Task Log(LogMessage msg)
+        //{
+        //    Console.WriteLine(msg.Message);            
+        // }
     }
 }
