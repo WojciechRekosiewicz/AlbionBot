@@ -76,6 +76,8 @@ namespace AlbionBot.Modules
         }
 
         [Command("Check")]
+        [RequireBotPermission(GuildPermission.ManageRoles)]
+        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task CheckRank()
         {            
             List<string> nagelfarMembers = GetNagelfarMembers();
@@ -98,12 +100,12 @@ namespace AlbionBot.Modules
                     if (getNickName == null)
 
                     {
-                       // await Context.Channel.SendMessageAsync($"not nick {userArray[i].Username}");
+                        await Context.Channel.SendMessageAsync($"not nick {userArray[i].Username}");
                         await userArray[i].RemoveRoleAsync(role);
                     }
                     else
                     {
-                       // await Context.Channel.SendMessageAsync($"not user {userArray[i].Nickname}");
+                        await Context.Channel.SendMessageAsync($"not user {userArray[i].Nickname}");
                         await userArray[i].RemoveRoleAsync(role);
                     }
                 }
