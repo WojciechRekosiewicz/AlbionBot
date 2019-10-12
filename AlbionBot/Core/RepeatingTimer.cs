@@ -16,8 +16,6 @@ namespace AlbionBot.Core
     {
         private static Timer loopingTimer;
         private static SocketTextChannel channel;
-        private static LinkedList<string> guildMembers;
-        private static LinkedList<string> discordMembers;
 
 
         internal static Task StartTimer()
@@ -27,7 +25,7 @@ namespace AlbionBot.Core
 
             loopingTimer = new Timer()
             {
-                Interval = 5000000,
+                Interval = 3600000,
                 AutoReset = true,
                 Enabled = true
             };
@@ -35,14 +33,6 @@ namespace AlbionBot.Core
 
             return Task.CompletedTask;
 
-        }
-
-        private static async void GatherDiscordUsers(object sender, ElapsedEventArgs e)
-        {
-            for (int index = 0; index < discordMembers.Count(); index++)
-            {
-
-            }
         }
 
         private static async void CheckGuild(object sender, ElapsedEventArgs e)

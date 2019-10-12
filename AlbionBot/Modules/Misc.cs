@@ -89,32 +89,31 @@ namespace AlbionBot.Modules
             var users = Context.Guild.Users;
             var userArray = users.ToArray();
 
-            //await ResetRanks();
-
             for (int i = 0; i < users.Count; i++)
-                for(int j = 0; j < commonList.Count(); j++)
             {
-
+                var user = userArray[i];
                 var getNickName = userArray[i].Nickname;
-           
-                if (getNickName == null)
+                if ((!commonList.Contains(user.Nickname)) && !(commonList.Contains(user.Username)) && ((differences.Contains(user.Username)) || (differences.Contains(user.Nickname))))
                 {
-                        if (commonList.ElementAt(j) != userArray[i].Username)
-                        {
-                            await userArray[i].RemoveRoleAsync(role);
-                        }
+                    if (getNickName == null)
+
+                    {
+                       // await Context.Channel.SendMessageAsync($"not nick {userArray[i].Username}");
+                        await userArray[i].RemoveRoleAsync(role);
+                    }
+                    else
+                    {
+                       // await Context.Channel.SendMessageAsync($"not user {userArray[i].Nickname}");
+                        await userArray[i].RemoveRoleAsync(role);
+                    }
                 }
                 else
                 {
-                        if (commonList.ElementAt(j) != userArray[i].Nickname)
-                        {
-
-                            await userArray[i].RemoveRoleAsync(role);
-                        }
-                    }
+                    continue;  
+                }
             }
 
-             await Context.Channel.SendMessageAsync($"Done");
+            await Context.Channel.SendMessageAsync($"Done");
         }
 
         //[Command("Check")]
