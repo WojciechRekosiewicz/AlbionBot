@@ -19,7 +19,7 @@ namespace AlbionBot.Modules
     {
      
 
-        [Command("members")]
+        [Command("Members")]
         public async Task Members()
         {           
             string json = "";
@@ -77,7 +77,7 @@ namespace AlbionBot.Modules
 
 
 
-        [Command("check")]
+        [Command("Check")]
         public async Task CheckRank()
         {            
             List<string> nagelfarMembers = GetNagelfarMembers();
@@ -297,7 +297,7 @@ namespace AlbionBot.Modules
         }
 
         [Command("Secret")]
-        public async Task Secret([Remainder]string arg = "")
+        public async Task Secret()
         {
             if (!UserIsNagelf((SocketGuildUser)Context.User))
             {

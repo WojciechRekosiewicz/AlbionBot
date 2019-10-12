@@ -20,9 +20,6 @@ namespace AlbionBot.Core
         private static LinkedList<string> discordMembers;
 
 
-
-
-
         internal static Task StartTimer()
         {
             // gets server id and channel id
@@ -30,7 +27,7 @@ namespace AlbionBot.Core
 
             loopingTimer = new Timer()
             {
-                Interval = 30000000,
+                Interval = 5000000,
                 AutoReset = true,
                 Enabled = true
             };
@@ -48,18 +45,13 @@ namespace AlbionBot.Core
             }
         }
 
-
-
         private static async void CheckGuild(object sender, ElapsedEventArgs e)
         {
-            //LinkedList<string> guildMembers = new LinkedList<string>();
-            //LinkedList<string> discordMembers = new LinkedList<string>();
-
             if (Global.Client == null)
             {
                 Console.WriteLine("tick before client rdy");       
             }
-            await channel.SendMessageAsync("$x");
+            await channel.SendMessageAsync("$check");
 
 
 
